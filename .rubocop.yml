@@ -1,0 +1,32 @@
+inherit_from: .rubocop_todo.yml
+
+## 全体に適応する項目。Excludeに設定したファイルはチェック対象外になる。
+AllCops:
+  TargetRubyVersion: 2.6.6
+  Exclude:
+    - bin/*
+    - db//schema.rb
+    - db/migrate/*
+    - vendor/**/*
+    - config/**/*
+    - lib/tasks/*
+    - Gemfile
+    - features/**/*
+    - spec/**/*
+## rubocopのバージョンをアップグレートした際に、新しいCopが有効になる   
+  NewCops: enable
+
+## 日本語コメントを許可
+Style/AsciiComments:
+  Enabled: false
+
+## クラスやモジュールを階層的に定義する際に、コンパクト記法を許可する(デフォルトは nested)
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+
+Style/Documentation:
+  Enabled: false
+
+## frozen_string_literalの記述を書かなくても良い様にする
+Style/FrozenStringLiteralComment:
+  Enabled: false
