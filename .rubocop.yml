@@ -24,9 +24,14 @@ Style/AsciiComments:
 Style/ClassAndModuleChildren:
   EnforcedStyle: compact
 
+# クラスの説明がコメントで書かれていなくても許可する
 Style/Documentation:
   Enabled: false
 
 ## frozen_string_literalの記述を書かなくても良い様にする
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+## 空のメソッドの書き方で、expandedスタイルを許可する
+Style/EmptyMethod:
+  EnforcedStyle: expanded
