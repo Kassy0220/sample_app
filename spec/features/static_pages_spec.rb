@@ -2,32 +2,50 @@ require 'rails_helper'
 
 RSpec.feature "StaticPages", type: :feature do
   feature "static_pages have correct title" do
-    given(:base_title) {'Ruby on Rails Tutorial Sample App'}
 
-    scenario "静的ページのHome画面のタイトルが正しく表示される" do
-      visit static_pages_home_url
+    scenario "Home画面のタイトルが正しく表示される" do
+      visit root_path
       expect(page).to have_selector 'title', 
-      text: "#{base_title}", visible: false 
+      text: full_title(), visible: false 
       expect(page).not_to have_selector 'title', 
-      text: "Home | #{base_title}", visible: false
+      text: full_title("Home"), visible: false
     end
 
-    scenario "静的ページのHelp画面のタイトルが正しく表示される" do
-      visit static_pages_help_url
+    scenario "Help画面のタイトルが正しく表示される" do
+      visit help_path
       expect(page).to have_selector 'title', 
-      text: "Help | #{base_title}", visible: false
+      text: full_title("Help"), visible: false
     end
 
-    scenario "静的ページのAbout画面のタイトルが正しく表示される" do
-      visit static_pages_about_url
+    scenario "About画面のタイトルが正しく表示される" do
+      visit about_path
       expect(page).to have_selector 'title', 
-      text: "About | #{base_title}", visible: false
+      text: full_title("About"), visible: false
     end
 
-    scenario "静的ページのContact画面のタイトルが正しく表示される" do
-      visit static_pages_contact_url
+    scenario "Contact画面のタイトルが正しく表示される" do
+      visit contact_path
       expect(page).to have_selector 'title', 
-      text: "Contact | #{base_title}", visible: false
+      text: full_title("Contact"), visible: false
+    end   
+
+    scenario "Signup画面のタイトルが正しく表示される" do
+      visit signup_path
+      expect(page).to have_selector 'title', 
+      text: full_title("Sign up"), visible: false
+    end   
+
+    scenario "Home画面に各ページへのリンクが表示されている" do
+      visit root_path
+      expect(page).to have_link 'Home', href: root_path
+      expect(page).to have_link 'sample app', href: root_path
+      expect(page).to have_link 'Help', href: help_path
+      expect(page).to have_link 'About', href: about_path
+      expect(page).to have_link 'Contact', href: contact_path
+      expect(page).to have_link 'Sign up now!', href: signup_path
+      visit contact_path
+      expect(page).to have_selector 'title', 
+      text: full_title("Contact"), visible: false
     end    
   end
 end
