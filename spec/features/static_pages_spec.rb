@@ -7,7 +7,9 @@ RSpec.feature "StaticPages", type: :feature do
     scenario "静的ページのHome画面のタイトルが正しく表示される" do
       visit static_pages_home_url
       expect(page).to have_selector 'title', 
-      text: "Home | #{base_title}", visible: false 
+      text: "#{base_title}", visible: false 
+      expect(page).not_to have_selector 'title', 
+      text: "Home | #{base_title}", visible: false
     end
 
     scenario "静的ページのHelp画面のタイトルが正しく表示される" do
