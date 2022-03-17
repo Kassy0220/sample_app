@@ -13,6 +13,8 @@ AllCops:
     - Gemfile
     - features/**/*
     - spec/**/*
+    - Guardfile
+    
 ## rubocopのバージョンをアップグレートした際に、新しいCopが有効になる   
   NewCops: enable
 
