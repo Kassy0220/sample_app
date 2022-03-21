@@ -69,4 +69,7 @@ RSpec.configure do |config|
   config.after(:suite) do
     FileUtils.rm_rf(Dir["#{Rails.root}/tmp/storage/"])
   end
+
+  # FactoryBotの記述を省略する
+  config.include FactoryBot::Syntax::Methods
 end
