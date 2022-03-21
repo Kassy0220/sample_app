@@ -7,6 +7,5 @@ class User < ApplicationRecord
                     format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }
-  validates :avatar, content_type: ['image/png', 'image/jpg', 'image/jpeg'],
-                     size: { less_than: 5.megabytes }
+  validates :avatar, content_type: ['image/png', 'image/jpg', 'image/jpeg'], size: { less_than: 5.megabytes }
 end
