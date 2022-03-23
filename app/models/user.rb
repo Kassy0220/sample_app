@@ -8,4 +8,16 @@ class User < ApplicationRecord
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }
   validates :avatar, content_type: ['image/png', 'image/jpg', 'image/jpeg'], size: { less_than: 5.megabytes }
+
+  # 渡された文字列のハッシュ値を返す
+  def self.digest(string)
+    # cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
+    #                                               BCrypt::Engine.cost
+    if cost == ActiveModel::SecurePassword.min_cost
+      BCrypt::Engine::MIN_COST
+    else
+      BCrypt::Engine.cost
+    end
+    BCrypt::Password.create(string, cost: cost)
+  end
 end
