@@ -8,22 +8,22 @@ RSpec.describe User, type: :model do
 
   it "名前が存在していなければ、モデルは無効になる" do
     user = build(:user, name: "")
-    expect(user).not_to be_valid 
+    expect(user).to be_invalid 
   end
 
   it "メールアドレスが存在していなければ、モデルは無効になる" do
     user = build(:user, email: "")
-    expect(user).not_to be_valid
+    expect(user).to be_invalid
   end
 
   it "名前が51文字以上であれば、モデルは無効になる" do
     user = build(:user, name: "a" * 51)
-    expect(user).not_to be_valid
+    expect(user).to be_invalid
   end
 
   it "メールアドレスが256文字以上であれば、モデルは無効になる" do
     user = build(:user, email: "a" * 244 + "@example.com")
-    expect(user).not_to be_valid
+    expect(user).to be_invalid
   end
 
   it "有効なメールアドレスであれば、モデルは有効になる" do
@@ -39,7 +39,7 @@ RSpec.describe User, type: :model do
     foo@bar_baz.com foo@bar+baz.com, foo@bar..com]
     invalid_address.each do |invalid_address|
       user = build(:user, email: invalid_address)
-      expect(user).not_to be_valid
+      expect(user).to be_invalid
     end
   end
 
@@ -48,7 +48,7 @@ RSpec.describe User, type: :model do
     duplicate_user = user.dup
     duplicate_user.email = user.email.upcase
     user.save
-    expect(duplicate_user).not_to be_valid
+    expect(duplicate_user).to be_invalid
   end
 
   it "メールアドレスは、小文字で保存される" do
@@ -59,21 +59,26 @@ RSpec.describe User, type: :model do
 
   it "パスワードが存在していなければ、モデルは無効になる"  do
     user = build(:user, password: "", password_confirmation: "")
-    expect(user).not_to be_valid
+    expect(user).to be_invalid
   end
 
   it "パスワードが6文字以上でなければ、モデルは無効になる" do
     user = build(:user, password: "12345", password_confirmation: "12345")
-    expect(user).not_to be_valid
+    expect(user).to be_invalid
   end
 
   it "許可されていないファイルタイプであれば、モデルは無効になる" do
     user = build(:user, :with_invalid_filetype)
-    expect(user).not_to be_valid
+    expect(user).to be_invalid
   end
 
   it "5MB以上のファイルサイズであれば、モデルは無効になる" do
     user = build(:user, :with_invalid_filesize)
-    expect(user).not_to be_valid
+    expect(user).to be_invalid
+  end
+
+  it "remember_digestが空の場合、authenticated?メソッドはfalseを返す" do
+    user = build(:user)
+    expect(user.authenticated?('')).to be_falsey
   end
 end

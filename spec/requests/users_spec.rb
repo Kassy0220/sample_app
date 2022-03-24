@@ -8,7 +8,7 @@ RSpec.describe "Users", type: :request do
       expect(response).to have_http_status(200)
     end
 
-    it "ユーザー登録時が成功したら、ログインする" do
+    it "ユーザー登録が成功したら、ログインする" do
       expect {
         post users_path, params: {user: user}
       }.to change(User, :count).by(1)
