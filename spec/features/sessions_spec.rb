@@ -8,19 +8,7 @@ RSpec.feature "Sessions", type: :feature do
     fill_in 'Email', with: params[:email]
     fill_in 'Password', with: params[:password]
   end
-
-  feature "フラッシュメッセージのテスト" do
-    given(:email) { "" }
-    given(:password) { "" }
-    scenario "フラッシュメッセージが正しく表示される" do
-      click_button "Log in"
-      expect(page).to have_current_path(login_path)
-      expect(page).to have_content 'Invalid email/password combination'
-      visit root_path
-      expect(page).not_to have_content 'Invalid email/password combination'
-    end
-  end
-
+  
   feature "ログイン成功時のテスト" do
     given(:email) { 'user@example.com' }
     given(:password) { 'foobar' }
@@ -42,6 +30,18 @@ RSpec.feature "Sessions", type: :feature do
     end
   end
   
+  feature "フラッシュメッセージのテスト" do
+    given(:email) { "" }
+    given(:password) { "" }
+    scenario "ログイン失敗のフラッシュメッセージはページ遷移で消える" do
+      click_button "Log in"
+      expect(page).to have_current_path(login_path)
+      expect(page).to have_content 'Invalid email/password combination'
+      visit root_path
+      expect(page).not_to have_content 'Invalid email/password combination'
+    end
+  end
+
   feature "パスワードが無効であればログインできない" do
     given(:email) { 'user@example.com' }
     given(:password) { 'invalid' }

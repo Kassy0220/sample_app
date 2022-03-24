@@ -37,3 +37,11 @@ Style/FrozenStringLiteralComment:
 ## 空のメソッドの書き方で、expandedスタイルを許可する
 Style/EmptyMethod:
   EnforcedStyle: expanded
+
+## 三項演算子が複数行にまたがっても良い
+Style/MultilineTernaryOperator:
+  Enabled: false
+
+## AbcSizeのチェックの基準値を変更する(本来ならコードを見直すこと)
+Metrics/AbcSize:
+  Max: 25
