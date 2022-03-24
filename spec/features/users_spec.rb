@@ -20,8 +20,8 @@ RSpec.feature "Users", type: :feature do
       fill_in 'Name', with: "Example User"
       fill_in 'Email', with: "user@example.com"
       attach_file "Avatar", "#{Rails.root}/spec/files/avatar.png"
-      fill_in 'Password', with: "password"
-      fill_in 'Password confirmation', with: "password"
+      fill_in 'Password', with: "foobar"
+      fill_in 'Password confirmation', with: "foobar"
       click_on 'Create my account'
     }.to change(User, :count).by(1)
     expect(page).to have_current_path(user_path(1))

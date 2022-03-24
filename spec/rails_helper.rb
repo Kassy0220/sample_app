@@ -9,6 +9,7 @@ require 'rspec/rails'
 require 'capybara/rspec'
 # ヘルパーメソッドを、テスト内でも使えるようにする
 include ApplicationHelper
+include SessionsHelper
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
