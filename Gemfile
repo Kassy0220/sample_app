@@ -2,7 +2,8 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'rails',      '6.0.4'
-gem 'bcrypt', '3.1.13'
+gem 'bcrypt',     '3.1.13'
+gem 'faker',      '2.20.0'
 gem 'bootstrap-sass', '3.4.1'
 gem 'puma',       '4.3.6'
 gem 'sass-rails', '5.1.0'
@@ -14,6 +15,7 @@ gem 'mini_magick'
 gem 'image_processing'
 gem 'aws-sdk-s3', require: false
 gem 'active_storage_validations'
+gem 'kaminari'
 
 group :development, :test do
   gem 'sqlite3', '1.4.1'

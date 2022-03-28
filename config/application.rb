@@ -18,5 +18,8 @@ module SampleApp
         helper_specs: false,
         routing_specs: false
     end
+
+    # デフォルトの言語を日本語に設定する
+    config.i18n.default_locale = :ja
   end
 end
