@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature "Users", type: :feature do
-  feature "ユーザー登録のテスト" do
+  feature "#create" do
     scenario "無効な値の場合は、ユーザー登録できない" do
       visit signup_path
       expect {
@@ -31,7 +31,7 @@ RSpec.feature "Users", type: :feature do
     end
   end
 
-  feature "ユーザー一覧ページのテスト" do
+  feature "#index" do
     given!(:user) { create(:user) }
     background do
       users = build_list(:serial_user, 30, created_at: Time.current, updated_at: Time.current)
@@ -51,9 +51,9 @@ RSpec.feature "Users", type: :feature do
     end
   end
 
-  feature "ユーザー更新のテスト" do
+  feature "#update" do
     given!(:user) { create(:user, :with_valid_avatar) }
-    scenario "ユーザー画像更新すると、新しい画像が表示される" do
+    scenario "ユーザー画像を更新すると、新しい画像が表示される" do
       visit login_path
       fill_in 'Email', with: "user@example.com"
       fill_in 'Password', with: "foobar"
@@ -69,7 +69,7 @@ RSpec.feature "Users", type: :feature do
     end
   end
 
-  feature "ユーザー削除のテスト" do
+  feature "#destroy" do
     given!(:user) { create(:user) }
     given!(:another_user) { create(:another_user) }
     scenario "管理者ユーザーは、削除リンクが表示され、ユーザーを削除できる" do

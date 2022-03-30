@@ -9,9 +9,17 @@ RSpec.feature "Sessions", type: :feature do
     fill_in 'Password', with: params[:password]
   end
   
-  feature "ログイン成功時のテスト" do
+  feature "#create" do
+    context "ログイン成功時" do
+    end
+    context "ログイン失敗時" do
+    end
+  end
+  
+  feature "#create successfully" do
     given(:email) { 'user@example.com' }
     given(:password) { 'foobar' }
+
     scenario "有効な情報であればログインできる" do
       click_button "Log in"
       expect(page).to have_current_path(user_path(user))
@@ -29,28 +37,30 @@ RSpec.feature "Sessions", type: :feature do
       expect(page).not_to have_link 'Log out'
     end
   end
-  
-  feature "フラッシュメッセージのテスト" do
-    given(:email) { "" }
-    given(:password) { "" }
-    scenario "ログイン失敗のフラッシュメッセージはページ遷移で消える" do
-      click_button "Log in"
-      expect(page).to have_current_path(login_path)
-      expect(page).to have_content 'Invalid email/password combination'
-      visit root_path
-      expect(page).not_to have_content 'Invalid email/password combination'
-    end
-  end
 
-  feature "パスワードが無効であればログインできない" do
-    given(:email) { 'user@example.com' }
-    given(:password) { 'invalid' }
-    scenario "ログイン失敗時のテスト" do
-      click_button "Log in"
-      expect(page).to have_current_path(login_path)
-      expect(page).to have_link 'Log in'
-      expect(page).not_to have_link 'Profile'
-      expect(page).not_to have_link 'Log out'
+  feature "#create unsuccessfully" do
+    context "メールアドレスとパスワードが両方無効な値の場合" do
+      given(:email) { "" }
+      given(:password) { "" }
+      scenario "ログインに失敗し、フラッシュメッセージが1度表示される" do
+        click_button "Log in"
+        expect(page).to have_current_path(login_path)
+        expect(page).to have_content 'Invalid email/password combination'
+        visit root_path
+        expect(page).not_to have_content 'Invalid email/password combination'
+      end
+    end
+
+    context "パスワードが無効な値の場合" do
+      given(:email) { "user@example.com" }
+      given(:password) { "invalid" }
+      scenario "ログインに失敗する" do
+        click_button "Log in"
+        expect(page).to have_current_path(login_path)
+        expect(page).to have_link 'Log in'
+        expect(page).not_to have_link 'Profile'
+        expect(page).not_to have_link 'Log out'
+      end
     end
   end
 
