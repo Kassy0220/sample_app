@@ -1,21 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe "Sessions", type: :request do
-  describe "ログインページのテスト" do
+  describe "#new" do
     it "ログインページが表示される" do
       get login_path
       expect(response).to have_http_status(200)
     end
   end
 
-  describe "ログイン成功時のテスト" do
+  describe "#create" do
     let(:user) { create(:user) }
-    it "cookieを保存してログイン" do
+    it "cookieを保存してログインできる" do
       log_in_as(user)
       expect(cookies[:remember_token]).to eq assigns(:user).remember_token
     end
 
-    it "cookieを削除してログイン" do
+    it "cookieを削除してログインできる" do
       # 一旦cookieを保存してログイン
       log_in_as(user)
       delete logout_path
@@ -25,7 +25,7 @@ RSpec.describe "Sessions", type: :request do
     end
   end
 
-  describe "ログアウト成功時のテスト" do
+  describe "#destroy" do
     let!(:user) { create(:user) }
     it "複数のウィンドウで正常にログアウトできる" do
       post login_path, params: { session: { email: 'user@example.com',

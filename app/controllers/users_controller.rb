@@ -32,8 +32,8 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    @user.avatar.purge if params[:user][:avatar]
     if @user.update(user_params)
+      ActiveStorage::Blob.unattached.find_each(&:purge)
       flash[:success] = 'Profile updated!'
       redirect_to @user
     else

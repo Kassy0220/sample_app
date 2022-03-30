@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SessionsHelper, type: :helper do
-  describe 'current_userメソッドのテスト' do
+  describe 'current_user helper' do
     let(:user) { create(:user) }
     before do
       # cookieに値を保存
