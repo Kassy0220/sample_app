@@ -8,15 +8,53 @@ RSpec.describe "Users", type: :request do
     end
   end
 
-  describe "#create" do
+  describe "POST /users" do
     let(:user) { attributes_for(:user) }
-    it "ユーザー登録が成功したら、ログインする" do
+    before do
+      ActionMailer::Base.deliveries.clear
+    end
+    it "ユーザー登録が成功したら、リダイレクトされる" do
       expect {
-        post users_path, params: {user: user}
+        post users_path, params: { user: user }
       }.to change(User, :count).by(1)
-      expect(response).to have_http_status(302)
-      expect(response).to redirect_to user_url(User.last)
-      expect(logged_in?).to be_truthy
+      expect(ActionMailer::Base.deliveries.size).to eq(1)
+      expect(response).to redirect_to root_url
+      expect(logged_in?).to eq false
+    end
+  end
+
+  describe "#create " do
+    let(:user) { create(:user, :no_activated) }
+
+    context "アカウントを有効化していない場合" do
+      it "ログインできない" do
+        log_in_as(user)
+        expect(logged_in?).not_to eq true
+      end
+    end
+
+    context "有効化トークンが無効な場合" do
+      it "有効化できずログインできない" do
+        get edit_account_activation_path('invalid token', email: user.email)
+        expect(logged_in?).to eq false
+        expect(response).to redirect_to root_url
+      end
+    end
+
+    context "トークンは正しいが、メールアドレスが無効な場合" do
+      it "有効化できずログインできない" do
+        get edit_account_activation_path(user.activation_token, email: 'wrong')
+        expect(logged_in?).to eq false
+        expect(response).to redirect_to root_url
+      end
+    end
+
+    context "トークン、メールアドレス両方が有効な場合" do
+      it "ログインできる" do
+        get edit_account_activation_path(user.activation_token, email: user.email)
+        expect(logged_in?).to eq true
+        expect(response).to redirect_to user
+      end
     end
   end
 

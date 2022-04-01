@@ -44,4 +44,8 @@ Style/MultilineTernaryOperator:
 
 ## AbcSizeのチェックの基準値を変更する(本来ならコードを見直すこと)
 Metrics/AbcSize:
-  Max: 25
+  Max: 30
+
+## 長いメソッドを許容する
+Metrics/MethodLength:
+  Max: 16

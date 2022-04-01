@@ -5,6 +5,8 @@ FactoryBot.define do
     password {"foobar"}
     password_confirmation {"foobar"}
     admin {true}
+    activated {true}
+    activated_at {Time.zone.now}
     
     # 有効な画像
     trait :with_valid_avatar do
@@ -18,6 +20,12 @@ FactoryBot.define do
     trait :with_invalid_filesize do
       avatar {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec/files/over7MB.jpeg'))}
     end
+
+    # 有効化されていないユーザー
+    trait :no_activated do
+      activated { false }
+      activated_at { nil }
+    end
   end
 
   # 別のユーザー
@@ -26,6 +34,8 @@ FactoryBot.define do
     email {"another@example.com"}
     password {"password"}
     password_confirmation {"password"}
+    activated {true}
+    activated_at {Time.zone.now}
   end
 
   sequence :serial_name do |i|
@@ -41,5 +51,7 @@ FactoryBot.define do
     email { generate :serial_email }
     password { "password" }
     password_confirmation { "password" }
+    activated {true}
+    activated_at {Time.zone.now}
   end
 end
