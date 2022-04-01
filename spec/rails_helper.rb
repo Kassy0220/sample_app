@@ -9,6 +9,7 @@ require 'rspec/rails'
 require 'capybara/rspec'
 # ヘルパーメソッドを、テスト内でも使えるようにする
 include ApplicationHelper
+include SessionsHelper
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -23,7 +24,7 @@ include ApplicationHelper
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 #
-# Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
+Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
@@ -69,4 +70,10 @@ RSpec.configure do |config|
   config.after(:suite) do
     FileUtils.rm_rf(Dir["#{Rails.root}/tmp/storage/"])
   end
+
+  # FactoryBotの記述を省略する
+  config.include FactoryBot::Syntax::Methods
+
+  # テスト用のヘルパーメソッドを読み込む
+  config.include TestHelper
 end

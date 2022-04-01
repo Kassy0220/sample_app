@@ -2,7 +2,8 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'rails',      '6.0.4'
-gem 'bcrypt', '3.1.13'
+gem 'bcrypt',     '3.1.13'
+gem 'faker',      '2.20.0'
 gem 'bootstrap-sass', '3.4.1'
 gem 'puma',       '4.3.6'
 gem 'sass-rails', '5.1.0'
@@ -14,12 +15,14 @@ gem 'mini_magick'
 gem 'image_processing'
 gem 'aws-sdk-s3', require: false
 gem 'active_storage_validations'
+gem 'kaminari'
 
 group :development, :test do
   gem 'sqlite3', '1.4.1'
   gem 'byebug',  '11.0.1', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails'
   gem 'guard-rspec', require: false
+  gem 'factory_bot_rails'
 end
 
 group :development do
@@ -40,6 +43,7 @@ group :test do
   gem 'minitest-reporters',       '1.3.8'
   gem 'guard',                    '2.16.2'
   gem 'guard-minitest',           '2.4.6'
+  gem 'launchy'
 end
 
 group :production do

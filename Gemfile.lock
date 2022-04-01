@@ -108,6 +108,13 @@ GEM
     diff-lcs (1.5.0)
     erubi (1.10.0)
     execjs (2.8.1)
+    factory_bot (6.2.1)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.2.0)
+      factory_bot (~> 6.2.0)
+      railties (>= 5.0.0)
+    faker (2.20.0)
+      i18n (>= 1.8.11, < 2)
     ffi (1.15.5)
     formatador (1.1.0)
     globalid (1.0.0)
@@ -137,6 +144,20 @@ GEM
     jbuilder (2.9.1)
       activesupport (>= 4.2.0)
     jmespath (1.6.1)
+    kaminari (1.2.2)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.2.2)
+      kaminari-activerecord (= 1.2.2)
+      kaminari-core (= 1.2.2)
+    kaminari-actionview (1.2.2)
+      actionview
+      kaminari-core (= 1.2.2)
+    kaminari-activerecord (1.2.2)
+      activerecord
+      kaminari-core (= 1.2.2)
+    kaminari-core (1.2.2)
+    launchy (2.5.0)
+      addressable (~> 2.7)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -329,11 +350,15 @@ DEPENDENCIES
   bootstrap-sass (= 3.4.1)
   byebug (= 11.0.1)
   capybara (= 3.28.0)
+  factory_bot_rails
+  faker (= 2.20.0)
   guard (= 2.16.2)
   guard-minitest (= 2.4.6)
   guard-rspec
   image_processing
   jbuilder (= 2.9.1)
+  kaminari
+  launchy
   listen (= 3.1.5)
   mini_magick
   minitest (= 5.11.3)
