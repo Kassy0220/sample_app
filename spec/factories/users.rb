@@ -26,6 +26,15 @@ FactoryBot.define do
       activated { false }
       activated_at { nil }
     end
+
+    # パスワードをリセットするユーザー
+    trait :password_reset do
+      token = User.new_token
+      digest = User.digest(token)
+      reset_token {token}
+      reset_digest {digest}
+      reset_sent_at {Time.zone.now}
+    end
   end
 
   # 別のユーザー
@@ -41,11 +50,12 @@ FactoryBot.define do
   sequence :serial_name do |i|
     "Example User No.#{i + 1}"
   end
-
+  
   sequence :serial_email do |i|
     "user-#{i + 1}@example.com"
   end
-
+  
+  # 量産可能な複数のユーザー
   factory :serial_user, class: User do
     name { generate :serial_name }
     email { generate :serial_email }
