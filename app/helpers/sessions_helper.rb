@@ -29,7 +29,7 @@ module SessionsHelper
     user && user == current_user
   end
 
-  # ユーザーがログインしていなければtrue、 その他ならfalseを返す
+  # ユーザーがログインして入ればtrue、 その他ならfalseを返す
   def logged_in?
     !current_user.nil?
   end
