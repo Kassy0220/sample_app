@@ -41,8 +41,8 @@ FactoryBot.define do
   factory :another_user, class: User do
     name {"Example Another"}
     email {"another@example.com"}
-    password {"password"}
-    password_confirmation {"password"}
+    password {"foobar"}
+    password_confirmation {"foobar"}
     activated {true}
     activated_at {Time.zone.now}
   end
@@ -59,8 +59,8 @@ FactoryBot.define do
   factory :serial_user, class: User do
     name { generate :serial_name }
     email { generate :serial_email }
-    password { "password" }
-    password_confirmation { "password" }
+    password { "foobar" }
+    password_confirmation { "foobar" }
     activated {true}
     activated_at {Time.zone.now}
   end
