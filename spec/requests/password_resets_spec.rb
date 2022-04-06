@@ -7,6 +7,7 @@ RSpec.describe "PasswordResets", type: :request do
       expect(response).to have_http_status(200)
     end
   end
+
   describe "#create" do
     let(:user) { create(:user) }
     before do
@@ -33,7 +34,7 @@ RSpec.describe "PasswordResets", type: :request do
   end
 
   describe "#edit" do
-    # let(:user) { create(:user) }
+
     context "無効な値の場合" do
       it "メールアドレスが無効であれば、リダイレクトされる" do
         user = create(:user, :password_reset)

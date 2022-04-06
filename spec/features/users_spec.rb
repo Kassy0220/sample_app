@@ -15,8 +15,7 @@ RSpec.feature "Users", type: :feature do
       expect(page).to have_css '.alert'
     end
 
-    # テストをスキップ
-    xscenario "有効な値の場合は、ユーザー登録される" do
+    scenario "有効な値の場合は、ユーザー登録される" do
       visit signup_path
       expect {
         fill_in 'Name', with: "Example User"
@@ -26,9 +25,10 @@ RSpec.feature "Users", type: :feature do
         fill_in 'Confirmation', with: "foobar"
         click_on 'Create my account'
       }.to change(User, :count).by(1)
-      visit edit_account_activation_path(token, email: user.email)
-      expect(page).to have_current_path(user_path(user))
-      expect(page).to have_content 'Welcome to the Sample App!'
+      # メールアドレスによるアカウント有効化の手順はスキップ
+      user = User.last
+      user.toggle!(:activated)
+      visit  user_path(user)
       expect(page).to have_selector("img[src$='avatar.png']")
     end
   end
@@ -36,14 +36,11 @@ RSpec.feature "Users", type: :feature do
   feature "#index" do
     given!(:user) { create(:user) }
     background do
-      users = build_list(:serial_user, 30, created_at: Time.current, updated_at: Time.current)
+      users = build_list(:serial_user, 30, created_at: Time.current,      updated_at: Time.current)
       User.insert_all users.map(&:attributes)
     end
     scenario "ログイン済みのユーザーはユーザー一覧ページが表示される" do
-      visit login_path
-      fill_in 'Email', with: "user@example.com"
-      fill_in 'Password', with: "foobar"
-      click_button 'Log in'
+      feature_spec_log_in_as(user)
       visit users_path
       expect(page).to have_current_path users_path
       expect(page.all('.pagination').count).to eq 2
@@ -53,13 +50,27 @@ RSpec.feature "Users", type: :feature do
     end
   end
 
+  feature "#show" do
+  let!(:user) { create(:user) }
+  background do
+    microposts = build_list(:serial_microposts, 30, created_at: Time.current, updated_at: Time.current, user: user)
+    Micropost.insert_all microposts.map(&:attributes)
+    feature_spec_log_in_as(user)
+  end
+    scenario "ユーザーのプロフィール画面には、投稿が表示される" do
+      expect(page).to have_current_path user_path(user)
+      expect(page).to have_content "Microposts (#{user.microposts.count})"
+      expect(page.all('.pagination').count).to eq 1
+      user.microposts.page(1).each do |micropost|
+        expect(page).to have_content micropost.content
+      end
+    end
+  end
+
   feature "#update" do
     given!(:user) { create(:user, :with_valid_avatar) }
     scenario "ユーザー画像を更新すると、新しい画像が表示される" do
-      visit login_path
-      fill_in 'Email', with: "user@example.com"
-      fill_in 'Password', with: "foobar"
-      click_button 'Log in'
+      feature_spec_log_in_as(user)
       visit edit_user_path(user)
       expect(page).to have_selector ("img[src$='avatar.png']")
       fill_in 'Email', with: "user@example.com"
@@ -90,7 +101,7 @@ RSpec.feature "Users", type: :feature do
     scenario "管理者ユーザーでなければ、削除リンクが表示されない" do
       visit login_path
       fill_in 'Email', with: "another@example.com"
-      fill_in 'Password', with: "password"
+      fill_in 'Password', with: "foobar"
       click_button 'Log in'
       visit users_path
       expect(page).not_to have_link 'delete'

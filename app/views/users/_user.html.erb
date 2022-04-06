@@ -1,5 +1,5 @@
 <li>
-  <%= image_tag user.avatar.variant(resize:'100x100'),
+  <%= image_tag user.display_avatar(100),
       class: "avatar" if user.avatar.attached? %>
   <%= link_to user.name, user %>
   <% if current_user.admin? && !current_user?(user) %>
