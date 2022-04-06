@@ -44,10 +44,7 @@ RSpec.feature "StaticPages", type: :feature do
     end    
     scenario "ログイン済みの時、Home画面に各ページへのリンクが表示されている" do
       user = create(:user)
-      visit login_path
-      fill_in 'Email', with: 'user@example.com'
-      fill_in 'Password', with: 'foobar'
-      click_button 'Log in'
+      feature_spec_log_in_as(user)
       expect(page).to have_link 'Users', href: users_path	
       expect(page).to have_link 'Profile', href: user_path(user)
       expect(page).to have_link 'Settings', href: edit_user_path(user)

@@ -4,13 +4,22 @@ class User < ApplicationRecord
   before_save :downcase_email
   before_create :create_activation_digest
   has_one_attached :avatar
+  has_many :microposts, dependent: :destroy
   validates :name, presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i.freeze
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
-  validates :avatar, content_type: ['image/png', 'image/jpg', 'image/jpeg'], size: { less_than: 5.megabytes }
+  validates :avatar, content_type: { in: %w[image/png image/jpg image/jpeg],
+                                     message: 'must be a valid image format' },
+                     size: { less_than: 5.megabytes,
+                             message: 'shoud less than 5MB' }
+
+  # プロフィール画像の大きさをリサイズする
+  def display_avatar(size)
+    avatar.variant(resize: "#{size}x#{size}")
+  end
 
   # 渡された文字列のハッシュ値を返す
   def self.digest(string)
@@ -56,8 +65,8 @@ class User < ApplicationRecord
   # パスワード再設定の属性を設定する
   def create_reset_digest
     self.reset_token = User.new_token
-    update_columns(reset_digest: User.digest(reset_token), 
-                  reset_sent_at: Time.zone.now)
+    update_columns(reset_digest: User.digest(reset_token),
+                   reset_sent_at: Time.zone.now)
   end
 
   # パスワード再設定用のメールを送信する
@@ -68,6 +77,11 @@ class User < ApplicationRecord
   # パスワード再設定の期限が切れている場合はtrueを返す
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
+  end
+
+  # 試作のfeedメソッド
+  def feed
+    Micropost.where('user_id = ?', id)
   end
 
   private
