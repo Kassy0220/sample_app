@@ -103,4 +103,48 @@ RSpec.describe User, type: :model do
       }.to change(Micropost, :count).by(-1)
     end
   end
+
+  describe "follow" do
+    it "ユーザーをフォローし、そのフォローを解除できる" do
+      user = create(:user)
+      another_user = create(:another_user)
+      # フォローしていないことを確認
+      expect(user.following?(another_user)).not_to be_truthy
+      user.follow(another_user)
+      expect(user.following?(another_user)).to be_truthy
+      expect(another_user.followers.include?(user)).to be_truthy
+      user.unfollow(another_user)
+      expect(user.following?(another_user)).not_to be_truthy
+    end
+  end
+
+  describe "feed" do
+    let!(:user) { create(:user) }
+    before do
+      create_microposts(user, 10)
+    end
+
+    it "フィードに自身の投稿が含まれているか確認" do
+      user.microposts.each do |micropost|
+        expect(user.feed).to include micropost
+      end
+    end
+
+    it "フィードにフォローしたユーザーの投稿が含まれているか確認" do
+      another_user = create(:another_user)
+      create_microposts(another_user, 5)
+      user.follow(another_user)
+      another_user.microposts.each do |micropost|
+        expect(user.feed).to include micropost
+      end
+    end
+
+    it "フィードにフォローしていないユーザーの投稿は含まれていないか確認" do
+      serial_user = create(:serial_user)
+      create_microposts(serial_user, 5)
+      serial_user.microposts.each do |micropost|
+        expect(user.feed).not_to include micropost
+      end
+    end
+  end
 end

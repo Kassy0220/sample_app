@@ -169,4 +169,20 @@ RSpec.describe "Users", type: :request do
       expect(response).to redirect_to root_url
     end
   end
+
+  describe "#following" do
+    it "非ログイン状態でフォローしているユーザーのページを開こうとすると、リダイレクトされる" do
+      user = create(:user)
+      get following_user_path(user)
+      expect(response).to redirect_to login_url
+    end
+  end
+
+  describe "#followers" do
+    it "非ログイン状態でフォロワーのページを開こうとすると、リダイレクトされる" do
+      user = create(:user)
+      get followers_user_path(user)
+      expect(response).to redirect_to login_url
+    end
+  end
 end

@@ -3,8 +3,7 @@ require 'rails_helper'
 RSpec.feature "Micropost", type: :feature do
   let!(:user) { create(:user) }
   background do
-    microposts = build_list(:serial_microposts, 30, created_at: Time.current, updated_at: Time.current, user: user)
-    Micropost.insert_all microposts.map(&:attributes)
+    create_microposts(user, 30)
     feature_spec_log_in_as(user)
     visit root_path
   end
@@ -64,7 +63,7 @@ RSpec.feature "Micropost", type: :feature do
   scenario "削除リンクをクリックすると、マイクロポストを削除することができる" do
     expect(page).to have_link 'delete'
     expect {
-      click_link 'delete', href: micropost_path(user.microposts.first)
+      click_link 'delete', match: :first
     }.to change(user.microposts, :count).by -1
   end
 
