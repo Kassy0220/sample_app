@@ -22,10 +22,6 @@ AllCops:
 Style/AsciiComments:
   Enabled: false
 
-## クラスやモジュールを階層的に定義する際に、コンパクト記法を許可する(デフォルトは nested)
-Style/ClassAndModuleChildren:
-  EnforcedStyle: compact
-
 # クラスの説明がコメントで書かれていなくても許可する
 Style/Documentation:
   Enabled: false
