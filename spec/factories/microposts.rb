@@ -19,13 +19,13 @@ FactoryBot.define do
     end
   end
 
-  # sequence :serial_content do |i|
-  #   "Text number-#{i}"
-  # end
-
   factory :serial_microposts, class: Micropost do
-    i = 1
     sequence(:content){ |i| "Text number-#{i}" }
     association :user
   end
+end
+
+def create_microposts(user, number)
+  microposts = build_list(:serial_microposts, number, created_at: Time.current, updated_at: Time.current, user: user)
+  Micropost.insert_all microposts.map(&:attributes)
 end

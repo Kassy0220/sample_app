@@ -107,4 +107,31 @@ RSpec.feature "Users", type: :feature do
       expect(page).not_to have_link 'delete'
     end
   end
+
+  feature "#following" do
+    let!(:user) { create(:user) }
+    let!(:another_user) { create(:another_user) }
+    background do
+      feature_spec_log_in_as(user)
+      visit user_path(another_user)
+    end
+
+    scenario "他のユーザーをフォロー/フォロー解除ができる(非同期)", js: true  do
+      expect(page).to have_button 'Follow'
+      # ユーザーをフォロー
+      expect {
+        click_on 'Follow'
+        sleep 0.5
+      }.to change(Relationship, :count).by(1) 
+      expect(page).to have_link "#{another_user.followers.count} followers"
+      expect(page).to have_button 'Unfollow'
+      # ユーザーをフォロー解除
+      expect {
+          click_on 'Unfollow'
+          sleep 0.5
+        }.to change(Relationship, :count).by(-1)
+      expect(page).to have_link "#{another_user.followers.count} followers"
+      expect(page).to have_button 'Follow'
+    end
+  end
 end
