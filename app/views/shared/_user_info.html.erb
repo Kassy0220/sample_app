@@ -1,4 +1,4 @@
-<%= link_to image_tag(current_user.avatar.variant(resize:'50x50')), 
+<%= link_to image_tag(current_user.display_avatar(50)), 
             current_user, class: "avatar" if current_user.avatar.attached? %>
 <h1><%= current_user.name %></h1>
 <span><%= link_to "view my profile", current_user %></span>

@@ -21,5 +21,8 @@ module SampleApp
 
     # デフォルトの言語を日本語に設定する
     config.i18n.default_locale = :ja
+
+    # 認証トークンをremoteフォームに埋め込む(JavaScript)
+    config.action_view.embed_authenticity_token_in_remote_forms = true
   end
 end
