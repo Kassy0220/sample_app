@@ -1,2 +1,4 @@
-class Connection < ApplicationCable::ActionCable::Connection::Base
+module ApplicationCable
+  class Connection < ActionCable::Connection::Base
+  end
 end
