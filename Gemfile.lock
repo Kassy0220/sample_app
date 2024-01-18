@@ -276,6 +276,13 @@ GEM
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
     shellany (0.0.1)
+    slim (5.2.0)
+      temple (~> 0.10.0)
+      tilt (>= 2.1.0)
+    slim-rails (3.6.3)
+      actionpack (>= 3.1)
+      railties (>= 3.1)
+      slim (>= 3.0, < 6.0, != 5.0.0)
     solargraph (0.48.0)
       backport (~> 1.2)
       benchmark
@@ -303,6 +310,7 @@ GEM
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
     stringio (3.1.0)
+    temple (0.10.3)
     thor (1.3.0)
     tilt (2.3.0)
     timeout (0.4.1)
@@ -355,6 +363,7 @@ DEPENDENCIES
   rubocop-rails
   sassc-rails (= 2.1.2)
   selenium-webdriver (= 4.8.3)
+  slim-rails
   solargraph (= 0.48.0)
   sprockets-rails (= 3.4.2)
   sqlite3 (= 1.6.1)
