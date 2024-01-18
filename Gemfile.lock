@@ -283,6 +283,9 @@ GEM
       actionpack (>= 3.1)
       railties (>= 3.1)
       slim (>= 3.0, < 6.0, != 5.0.0)
+    slim_lint (0.24.0)
+      rubocop (>= 1.0, < 2.0)
+      slim (>= 3.0, < 6.0)
     solargraph (0.48.0)
       backport (~> 1.2)
       benchmark
@@ -364,6 +367,7 @@ DEPENDENCIES
   sassc-rails (= 2.1.2)
   selenium-webdriver (= 4.8.3)
   slim-rails
+  slim_lint
   solargraph (= 0.48.0)
   sprockets-rails (= 3.4.2)
   sqlite3 (= 1.6.1)
