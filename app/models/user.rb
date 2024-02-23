@@ -8,4 +8,8 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: true
+
+  has_secure_password
+  # has_secure_passwordで存在性のバリデーションも行われるが、空白文字で構成されるパスワードはバリデーションを通ってしまうため、presenct: trueをつけておく
+  validates :password, presence: true, length: { minimum: 8 }
 end
