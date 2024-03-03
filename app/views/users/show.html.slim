@@ -1,4 +1,8 @@
-p
-  => @user.name
-  | ,
-  =< @user.email
+- provide(:title, @user.name)
+
+.row
+  aside.col-md-4
+    section.user_info
+      h1
+        = gravatar_for @user
+        = @user.email
