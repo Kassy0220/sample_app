@@ -1,9 +1,7 @@
 - if @user.errors.any?
   #error_explanation
     .alert.alert-danger
-      | The form contains
-      = pluralize(@user.errors.count, 'error')
-      | .
+      | フォームで#{@user.errors.count}つエラーが発生しています
     ul
       - @user.errors.full_messages.each do |msg|
         li
