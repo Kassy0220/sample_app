@@ -13,9 +13,9 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     post login_path, params: { session: { email: '', password: '' } }
     assert_response :unprocessable_entity
     assert_template 'sessions/new'
-    assert_not flash.empty?
+    assert_select '.alert-danger', 'メールアドレスとパスワードの組み合わせが正しくありません'
     get root_path
-    assert flash.empty?
+    assert_select '.alert-danger', count: 0
   end
 
   test 'login with valid email / invalid password' do
@@ -24,9 +24,9 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     post login_path, params: { session: { email: 'michael@example.com', password: 'invalid' } }
     assert_response :unprocessable_entity
     assert_template 'sessions/new'
-    assert_not flash.empty?
+    assert_select '.alert-danger', 'メールアドレスとパスワードの組み合わせが正しくありません'
     get root_path
-    assert flash.empty?
+    assert_select '.alert-danger', count: 0
   end
 
   test 'login with valid information' do
