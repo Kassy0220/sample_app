@@ -13,10 +13,10 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     end
     assert_response :unprocessable_entity
     assert_template 'users/new'
-    assert_select 'li', "Name can't be blank"
-    assert_select 'li', 'Email is invalid'
-    assert_select 'li', "Password confirmation doesn't match Password"
-    assert_select 'li', 'Password is too short (minimum is 8 characters)'
+    assert_select 'li', '名前を入力してください'
+    assert_select 'li', 'メールアドレスは不正な値です'
+    assert_select 'li', 'パスワード(確認)とパスワードの入力が一致しません'
+    assert_select 'li', 'パスワードは8文字以上で入力してください'
   end
 
   test 'valid signup information' do
@@ -28,6 +28,6 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     end
     follow_redirect!
     assert_template 'users/show'
-    assert_select '.alert-success', 'Welcome to the Sample App!'
+    assert_select '.alert-success', 'Sample App へようこそ！'
   end
 end
