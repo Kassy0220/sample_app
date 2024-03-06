@@ -29,5 +29,6 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_template 'users/show'
     assert_select '.alert-success', 'Sample App へようこそ！'
+    assert logged_in?
   end
 end
