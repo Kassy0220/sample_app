@@ -15,7 +15,7 @@ ja:
         name: 名前
         email: メールアドレス
         password: パスワード
-        password_digest: パスワード(確認)
+        password_confirmation: パスワード(確認)
   date:
     abbr_day_names:
     - 日
