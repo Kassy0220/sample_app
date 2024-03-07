@@ -12,4 +12,11 @@ class User < ApplicationRecord
   has_secure_password
   # has_secure_passwordで存在性のバリデーションも行われるが、空白文字で構成されるパスワードはバリデーションを通ってしまうため、presenct: trueをつけておく
   validates :password, presence: true, length: { minimum: 8 }
+
+  class << self
+    def digest(string)
+      cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
+      BCrypt::Password.create(string, cost:)
+    end
+  end
 end
