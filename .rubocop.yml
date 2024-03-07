@@ -5,6 +5,9 @@ require:
 Metrics/AbcSize:
   Enabled: false
 
+Rails/HelperInstanceVariable:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
 
