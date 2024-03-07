@@ -2,7 +2,14 @@ header.navbar.navbar-fixed-top.navbar-inverse
   .container
     = link_to 'sample_app', root_path, id: 'logo'
     nav
-      ul.nav.navbar-nav.navbar-right
+      .navbar-header
+        button#hamburger.navbar-toggle.collapsed type='button'
+          span.sr-only
+            | Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+      ul#navbar-menu.nav.navbar-nav.navbar-right.collapse.navbar-collapse
         li
           = link_to 'Home', root_path
         li
